@@ -1,0 +1,12 @@
+library(scran)
+library(Matrix)
+library(Seurat)
+library(SingleCellExperiment)
+library(SeuratWrappers)
+library(dplyr)  
+library(SeuratDisk)
+library(SeuratData)
+library(rhdf5)
+
+setwd('E:/AAA_Labwork/capenterlab_mtb')
+Convert("SeuratProject.h5Seurat", dest = "h5ad")
