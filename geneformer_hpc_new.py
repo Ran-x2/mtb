@@ -40,13 +40,18 @@ all_metrics = cc.validate(model_directory="/home/rxr456/Geneformer/gf-12L-95M-i4
                           #n_hyperopt_trials=1,
                           predict_eval=True)
 
+model = f"{storage_dir}/250402_geneformer_cellClassifier_{output_prefix}/ksplit1/"
+
+with open(f"{storage_dir}/250402_geneformer_cellClassifier_{output_prefix}/{output_prefix}_eval_metrics_dict.pkl", 'rb') as file:
+    all_metrics = pickle.load(file)
+
 embex = EmbExtractor(model_type="CellClassifier",
                      num_classes=2, 
                      max_ncells=10000,
                      emb_layer=-1, 
                      emb_label=["expansion"],
                      labels_to_plot=["expansion"],
-                     forward_batch_size=150,
+                     forward_batch_size=48,
                      nproc=80)
 
 
