@@ -1,4 +1,4 @@
-# srun --nodes=1 --time=1:00:00 --ntasks=48 --mem=128G --pty /bin/bash
+# srun --time=8:00:00 --ntasks=48 --mem=128G --pty /bin/bash
 # module load GDAL
 # module load GEOS
 # module load PROJ
@@ -19,10 +19,12 @@
 # install.packages("sf", 
 #   configure.args = "--with-udunits2-lib=--/home/rxr456/udunits2/lib --with-udunits2-include=/home/rxr456/udunits2/include")
 
+#remotes::install_github('satijalab/seurat-wrappers')
 
 library(monocle3)
 library(Seurat)
 library(SingleCellExperiment)
+library(SeuratWrappers)
 setwd('/mnt/vstor/SOM_PATH_DKB50/members/rxr456/')
 srat = readRDS('srat_subset_for_DEG.rds')
 #srat = srat_sub
@@ -32,8 +34,9 @@ cds@rowRanges@elementMetadata@listData[["gene_short_name"]] <- rownames(srat[["R
   
 # Run DE analysis
 gene_fits <- fit_models(cds, model_formula_str = "~expansion",cores = 40)
-fit_coefs <- coefficient_table(gene_fits)
+saveRDS(gene_fits,'gene_fits')
 
+fit_coefs <- coefficient_table(gene_fits)
 # Adjust condition in the filter
 terms <- fit_coefs %>% filter(term == 'DonorIDDonor AJG2309')
 terms = terms %>% select(gene_short_name, term, q_value, normalized_effect)

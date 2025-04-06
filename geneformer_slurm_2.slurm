@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=rxr456_geneformer_mtb
+#SBATCH --job-name=rxr456_geneformer_mtb_2
 #SBATCH --output=geneformer_mtb_output.txt
 #SBATCH --error=geneformer_mtb_error.txt
 #SBATCH --time=150:00:00
@@ -19,4 +19,4 @@ export PYTHONPATH=/home/rxr456/miniconda3/envs/geneformer/lib/python3.10/site-pa
 
 conda activate geneformer
 echo "ready for python!"
-python /home/rxr456/geneformer_hpc.py
+python /home/rxr456/geneformer_hpc_2.py

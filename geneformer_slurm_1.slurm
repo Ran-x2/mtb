@@ -14,4 +14,4 @@
 export PATH="/home/rxr456/miniconda3/bin:$PATH"
 source /home/rxr456/miniconda3/etc/profile.d/conda.sh
 conda activate geneformer
-python /home/rxr456/geneformer_hpc_new.py
+python /home/rxr456/geneformer_hpc_1.py

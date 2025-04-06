@@ -79,14 +79,14 @@ isp.perturb_data(
 #     "cell_state_shift_1000"
 # )
 
-ispstats = InSilicoPerturberStats(mode="aggregate_gene_shifts",
-                                  genes_perturbed="all",
-                                  combos=0,
-                                  anchor_gene=None)
+# ispstats = InSilicoPerturberStats(mode="aggregate_gene_shifts",
+#                                   genes_perturbed="all",
+#                                   combos=0,
+#                                   anchor_gene=None)
 
-ispstats.get_stats(
-    f"{storage_dir}/",
-    None,
-    f"{storage_dir}/",
-    "gene_perturb_1000"
-)
+# ispstats.get_stats(
+#     f"{storage_dir}/",
+#     None,
+#     f"{storage_dir}/",
+#     "gene_perturb_1000"
+# )
