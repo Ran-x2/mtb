@@ -10,7 +10,6 @@
 #SBATCH --mail-type=ALL
 
 # Use the Python from your Miniconda installation
-
 export PATH="/home/rxr456/miniconda3/bin:$PATH"
 export PATH=/home/rxr456/miniconda3/envs/geneformer/bin:$PATH
 source /home/rxr456/miniconda3/etc/profile.d/conda.sh
