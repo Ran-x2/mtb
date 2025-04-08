@@ -13,12 +13,12 @@ library(GenomicRanges)
 library(rtracklayer)
 
 setwd('E:/AAA_Labwork/capenterlab_mtb')
+srat = readRDS('srat_subset_for_DEG.rds')
 lr_network <- readRDS('F:/CRC/Nichenet/lr_network_human_21122021.rds')
 ligand_target_matrix <- readRDS('F:/CRC/Nichenet/ligand_target_matrix_nsga2r_final.rds')
 weighted_networks <- readRDS('F:/CRC/Nichenet/weighted_networks_nsga2r_final.rds')
 # gr_network = readRDS(url("https://zenodo.org/record/7074291/files/gr_network_human_21122021.rds"))
 # sig_network = readRDS(url("https://zenodo.org/record/7074291/files/signaling_network_human_21122021.rds"))
-
 
 bg_filename = 'expressed_genes_in_less_expanded.csv'
 deg_filename = 'expansion_DEG.csv'
@@ -47,5 +47,27 @@ for (ligand in top_15_ligands) {
   }
 all_targets <- unique(as.vector(as.matrix(target_gene_union)))
 write.table(all_targets, 'nichenet_targets.csv', row.names = FALSE)  
+
+power_mat_to_plot = ligand_target_matrix[all_targets,top_15_ligands]
+
+srat <- NormalizeData(srat, normalization.method = "LogNormalize", scale.factor = 10000)
+Idents(srat) = srat$expansion
+subset_srat <- subset(srat, idents = 'more')
+
+dotplot = DotPlot(subset_srat, features = all_targets, assay = 'RNA') +
+  RotatedAxis() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggsave("downstream_in_more_dotplot.jpg", plot = dotplot, width = 12, height = 4,dpi = 300)
+
+divisors <- unlist(apply(power_mat_to_plot, 2, max))
+normalized_power_mat_to_plot <- sweep(power_mat_to_plot, 2, divisors, "/")
+
+htmap = pheatmap(t(normalized_power_mat_to_plot),# Scale by row (optional, for better visualization)
+                 cluster_rows = FALSE,   # Cluster rows
+                 cluster_cols = FALSE,   # Cluster columns
+                 color = colorRampPalette(c("blue", "white", "red"))(100),
+                 show_rownames = TRUE,
+                 show_colnames = TRUE)
+ggsave("ligand_powermap.jpg", plot = htmap, width = 12, height = 5,dpi = 300)
 
 #How's the downstream of these ligand expressed in the target cell type ('more')
