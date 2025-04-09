@@ -38,7 +38,7 @@ ligand_activities <- predict_ligand_activities(geneset = geneset_oi,
 sorted_table <- ligand_activities[order(ligand_activities$auroc,decreasing = TRUE), ]
 write.table(sorted_table, paste0('nichenet_result.csv'), row.names = FALSE)
   
-top_15_ligands = ligand_activities$test_ligand[1:15]
+top_15_ligands = sorted_table$test_ligand[1:15]
 target_gene_union <- as.data.frame( matrix(NA, nrow = 5, ncol = 15))
 colnames(target_gene_union) <- top_15_ligands
 for (ligand in top_15_ligands) {
