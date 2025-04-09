@@ -6,12 +6,12 @@ from geneformer import InSilicoPerturberStats
 from geneformer import EmbExtractor
 import pickle
 
-storage_dir = '/mnt/vstor/SOM_PATH_DKB50/members/rxr456/mtb_new/'
-output_prefix="cell_state_shift_6000"
+storage_dir = '/mnt/vstor/SOM_PATH_DKB50/members/rxr456/mtb_250409/'
+output_prefix="cell_state_shift_1goal2alt"
 vanilla_model = "/home/rxr456/Geneformer/gf-12L-95M-i4096"
 
 from geneformer import TranscriptomeTokenizer
-tk = TranscriptomeTokenizer({"expansion": "expansion"}, nproc=15)
+tk = TranscriptomeTokenizer({"identity": "identity"}, nproc=20)
 tk.tokenize_data(f"{storage_dir}", 
                  f"{storage_dir}",
                  "tokenized", 
@@ -19,12 +19,12 @@ tk.tokenize_data(f"{storage_dir}",
 
 from geneformer import Classifier
 cc = Classifier(classifier="cell",
-                cell_state_dict = {"state_key": "expansion", "states": "all"},
+                cell_state_dict = {"state_key": "identity", "states": "all"},
                 max_ncells=None,
                 freeze_layers = 6,
                 num_crossval_splits = 1,
                 split_sizes = {"train": 0.6, "valid": 0.2, "test": 0.2},
-                forward_batch_size=150,
+                forward_batch_size=16,
                 nproc=47)
 
 
@@ -40,17 +40,17 @@ all_metrics = cc.validate(model_directory="/home/rxr456/Geneformer/gf-12L-95M-i4
                           #n_hyperopt_trials=1,
                           predict_eval=True)
 
-model = f"{storage_dir}/250402_geneformer_cellClassifier_{output_prefix}/ksplit1/"
+model = f"{storage_dir}/250409_geneformer_cellClassifier_{output_prefix}/ksplit1/"
 
-with open(f"{storage_dir}/250402_geneformer_cellClassifier_{output_prefix}/{output_prefix}_eval_metrics_dict.pkl", 'rb') as file:
+with open(f"{storage_dir}/250409_geneformer_cellClassifier_{output_prefix}/{output_prefix}_eval_metrics_dict.pkl", 'rb') as file:
     all_metrics = pickle.load(file)
 
 embex = EmbExtractor(model_type="CellClassifier",
                      num_classes=2, 
                      max_ncells=10000,
                      emb_layer=-1, 
-                     emb_label=["expansion"],
-                     labels_to_plot=["expansion"],
+                     emb_label=["identity"],
+                     labels_to_plot=["identity"],
                      forward_batch_size=48,
                      nproc=80)
 

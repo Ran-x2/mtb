@@ -13,5 +13,6 @@
 # Use the Python from your Miniconda installation
 export PATH="/home/rxr456/miniconda3/bin:$PATH"
 source /home/rxr456/miniconda3/etc/profile.d/conda.sh
+storage_dir=/mnt/vstor/SOM_PATH_DKB50/members/rxr456/mtb_250409
 conda activate geneformer
-python /home/rxr456/geneformer_hpc_1.py
+python $storage_dir/geneformer_hpc_1.py
