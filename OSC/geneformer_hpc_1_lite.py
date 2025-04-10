@@ -31,7 +31,7 @@ cc = Classifier(classifier="cell",
                 num_crossval_splits = 1,
                 split_sizes = {"train": 0.6, "valid": 0.2, "test": 0.2},
                 forward_batch_size=16,
-                nproc=47)
+                nproc=39)
 
 
 cc.prepare_data(input_data_file=f"{storage_dir}/tokenized.dataset",
@@ -52,13 +52,13 @@ with open(f"{storage_dir}/250409_geneformer_cellClassifier_{output_prefix}/{outp
     all_metrics = pickle.load(file)
 
 embex = EmbExtractor(model_type="CellClassifier",
-                     num_classes=3, 
+                     num_classes=4, 
                      max_ncells=10000,
                      emb_layer=-1, 
                      emb_label=["identity"],
                      labels_to_plot=["identity"],
                      forward_batch_size=16,
-                     nproc=80)
+                     nproc=39)
 
 
 embs = embex.extract_embs(model,
@@ -99,7 +99,7 @@ embex = EmbExtractor(model_type="CellClassifier",
                      emb_layer=-1, 
                      summary_stat="exact_mean",  # I don't want this stat
                      forward_batch_size=16,
-                     nproc=80)
+                     nproc=39)
 
 state_embs_dict = embex.get_state_embs(
     cell_states_to_model,

@@ -51,7 +51,7 @@ embex = EmbExtractor(model_type="CellClassifier",
                      emb_layer=-1, 
                      emb_label=["identity"],
                      labels_to_plot=["identity"],
-                     forward_batch_size=48,
+                     forward_batch_size=16,
                      nproc=80)
 
 
