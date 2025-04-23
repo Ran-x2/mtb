@@ -11,7 +11,7 @@ try:
 except:
     print('path already exist!')
 
-output_prefix="mtb_250409"
+output_prefix="cell_state_shift_1goal2alt"
 vanilla_model = "/users/PDS0353/rxr456/Geneformer/gf-12L-95M-i4096"
 os.chdir(storage_dir)
 
@@ -34,17 +34,17 @@ cc = Classifier(classifier="cell",
                 nproc=47)
 
 
-cc.prepare_data(input_data_file=f"{storage_dir}/tokenized.dataset",
-                output_directory=f"{storage_dir}/",
-                output_prefix=output_prefix)
+# cc.prepare_data(input_data_file=f"{storage_dir}/tokenized.dataset",
+#                 output_directory=f"{storage_dir}/",
+#                 output_prefix=output_prefix)
 
-all_metrics = cc.validate(model_directory=vanilla_model,
-                          prepared_input_data_file=f"{storage_dir}/{output_prefix}_labeled_train.dataset",
-                          id_class_dict_file=f"{storage_dir}/{output_prefix}_id_class_dict.pkl",
-                          output_directory=f"{storage_dir}/",
-                          output_prefix=output_prefix,
-                          #n_hyperopt_trials=1,
-                          predict_eval=True)
+# all_metrics = cc.validate(model_directory=vanilla_model,
+#                           prepared_input_data_file=f"{storage_dir}/{output_prefix}_labeled_train.dataset",
+#                           id_class_dict_file=f"{storage_dir}/{output_prefix}_id_class_dict.pkl",
+#                           output_directory=f"{storage_dir}/",
+#                           output_prefix=output_prefix,
+#                           #n_hyperopt_trials=1,
+#                           predict_eval=True)
 
 model = f"{storage_dir}/250409_geneformer_cellClassifier_{output_prefix}/ksplit1/"
 
@@ -52,7 +52,7 @@ with open(f"{storage_dir}/250409_geneformer_cellClassifier_{output_prefix}/{outp
     all_metrics = pickle.load(file)
 
 embex = EmbExtractor(model_type="CellClassifier",
-                     num_classes=3, 
+                     num_classes=4, 
                      max_ncells=10000,
                      emb_layer=-1, 
                      emb_label=["identity"],
@@ -65,6 +65,9 @@ embs = embex.extract_embs(model,
                           f"{storage_dir}/tokenized.dataset",
                           f"{storage_dir}/",
                           output_prefix + "_embeddings_labeled")
+
+import pandas as pd
+embs = pd.read_csv(f"{output_prefix}_embeddings_labeled.csv",index_col=0)
 
 embex.plot_embs(embs=embs,
                 plot_style="heatmap",
@@ -95,7 +98,7 @@ cell_states_to_model = {
 
 embex = EmbExtractor(model_type="CellClassifier",
                      num_classes=4, 
-                     max_ncells=10000,
+                     max_ncells=50000,
                      emb_layer=-1, 
                      summary_stat="exact_mean",  # I don't want this stat
                      forward_batch_size=16,
@@ -104,7 +107,7 @@ embex = EmbExtractor(model_type="CellClassifier",
 state_embs_dict = embex.get_state_embs(
     cell_states_to_model,
     model,
-    f"{storage_dir}/{output_prefix}/tokenized.dataset",
-    f"{storage_dir}/{output_prefix}",
+    f"{storage_dir}/tokenized.dataset",
+    f"{storage_dir}/",
     "state_emb_4states"
 )

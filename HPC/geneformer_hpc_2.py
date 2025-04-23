@@ -86,7 +86,6 @@ isp = InSilicoPerturber(perturb_type="overexpress",
                         nproc=80)
 
 isp.perturb_data(
-    cell_states_to_model,
     model,
     f"{storage_dir}/tokenized.dataset",
     f"{storage_dir}/",

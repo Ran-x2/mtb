@@ -46,7 +46,7 @@ with open(f"{storage_dir}/250409_geneformer_cellClassifier_{output_prefix}/{outp
     all_metrics = pickle.load(file)
 
 embex = EmbExtractor(model_type="CellClassifier",
-                     num_classes=2, 
+                     num_classes=4, 
                      max_ncells=10000,
                      emb_layer=-1, 
                      emb_label=["identity"],
