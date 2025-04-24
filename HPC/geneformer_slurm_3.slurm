@@ -17,4 +17,4 @@ export PYTHONPATH=/home/rxr456/miniconda3/envs/geneformer/lib/python3.10/site-pa
 
 conda activate geneformer
 echo "ready for python!"
-python /home/rxr456/geneformer_hpc_3.py
+python /mnt/vstor/SOM_PATH_DKB50/members/rxr456/mtb_250409/geneformer_hpc_3.py

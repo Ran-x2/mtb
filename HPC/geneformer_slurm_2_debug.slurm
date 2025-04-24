@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --job-name=rxr456_geneformer_mtb_2
-#SBATCH --output=geneformer_mtb_output.txt
-#SBATCH --error=geneformer_mtb_error.txt
-#SBATCH --time=7-00:00:00
+#SBATCH --job-name=rxr456_geneformer_mtb_2_debug
+#SBATCH --output=geneformer_mtb_output_debug.txt
+#SBATCH --error=geneformer_mtb_error_debug.txt
+#SBATCH --time=10:00
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
 #SBATCH --mem=128gb
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=65
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=62
 #SBATCH --mail-user=rxr456@case.edu
 #SBATCH --mail-type=ALL
 

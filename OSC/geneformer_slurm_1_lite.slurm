@@ -4,7 +4,7 @@
 #SBATCH --output=geneformer_mtb_train_output.txt
 #SBATCH --error=geneformer_mtb_train_error.txt
 #SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=40
+#SBATCH --cpus-per-task=48
 #SBATCH --time=10:00:00
 #SBATCH --mem=64gb
 #SBATCH --mail-user=rxr456@case.edu

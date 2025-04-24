@@ -5,7 +5,7 @@ sys.path.append(os.getcwd())
 from geneformer import InSilicoPerturberStats
 import pickle
 
-storage_dir = '/mnt/vstor/SOM_PATH_DKB50/members/rxr456/mtb_new/'
+storage_dir = '/mnt/vstor/SOM_PATH_DKB50/members/rxr456/mtb_250409/'
 
 ispstats = InSilicoPerturberStats(mode="aggregate_gene_shifts",
                                   genes_perturbed="all",

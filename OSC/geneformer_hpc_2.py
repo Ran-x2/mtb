@@ -1,3 +1,7 @@
+import multiprocess as mp
+mp.set_start_method('fork', force=True)
+from multiprocessing import freeze_support
+
 import sys
 import os
 # pip install protobuf --target=/home/rxr456/miniconda3/envs/geneformer/lib/python3.10/site-packages
@@ -6,7 +10,7 @@ from geneformer import InSilicoPerturber
 from geneformer import InSilicoPerturberStats
 from geneformer import EmbExtractor
 import pickle
-from multiprocessing import freeze_support
+
 print("loading modules complete")
 
 storage_dir = '/users/PDS0353/rxr456/mtb_250409'
@@ -70,28 +74,24 @@ print("open state emb complete")
 #     "state_emb_4states"
 # )
 
-def main():
-    isp = InSilicoPerturber(perturb_type="overexpress",
-                        genes_to_perturb="all",
-                        combos=0,
-                        anchor_gene=None,
-                        model_type="CellClassifier",
-                        num_classes=4,
-                        emb_mode="cls",
-                        cell_states_to_model=cell_states_to_model,
-                        state_embs_dict=state_embs_dict,
-                        max_ncells=2000,
-                        emb_layer=-1,
-                        forward_batch_size=1,
-                        nproc=47)
-    print("start running")
-    isp.perturb_data(
-        model,
-        f"{storage_dir}/tokenized.dataset",
-        f"{storage_dir}/",
-        "state_emb_4states"
-    )
 
-if __name__ == '__main__':
-    freeze_support()      # safe even on Linux; required on Windows
-    main()
+isp = InSilicoPerturber(perturb_type="overexpress",
+                    genes_to_perturb="all",
+                    combos=0,
+                    anchor_gene=None,
+                    model_type="CellClassifier",
+                    num_classes=4,
+                    emb_mode="cls",
+                    cell_states_to_model=cell_states_to_model,
+                    state_embs_dict=state_embs_dict,
+                    max_ncells=3000,
+                    emb_layer=-1,
+                    forward_batch_size=1,
+                    nproc=71)
+print("start running")
+isp.perturb_data(
+    model,
+    f"{storage_dir}/tokenized.dataset",
+    f"{storage_dir}/",
+    "state_emb_4states"
+)
