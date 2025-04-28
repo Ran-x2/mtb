@@ -21,9 +21,8 @@ model = f"{storage_dir}/250409_geneformer_cellClassifier_{output_prefix}/ksplit1
 
 cell_states_to_model = {
     "state_key": "identity", 
-    "start_state": "less_expanded", 
-    "goal_state": "more_expanded_mtb_specific",
-    "alt_states":['more_expanded_bystander','more_expanded_mtb_specific_2']
+    "start_state": "more_expanded_mtb_specific", 
+    "goal_state": "more_expanded_bystander"
 }
 
 with open(f"{storage_dir}/state_emb_4states.pkl", 'rb') as file:
@@ -88,7 +87,7 @@ isp.perturb_data(
     model,
     f"{storage_dir}/tokenized.dataset",
     f"{storage_dir}/",
-    "state_emb_4states"
+    "2states_overexpression"
 )
 
 ispstats = InSilicoPerturberStats(mode="goal_state_shift",
@@ -101,5 +100,5 @@ ispstats.get_stats(
     f"{storage_dir}",
     None,
     f"{storage_dir}",
-    "state_emb_4states_overexpression"
+    "2states_overexpression"
 )
