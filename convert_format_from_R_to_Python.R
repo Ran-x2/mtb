@@ -38,14 +38,5 @@ sparse_mat <- sparseMatrix(
 
 colnames(sparse_mat) = as.character(cell_names)
 row.names(sparse_mat) = as.character(gene_names)
-srat_for_DEG = CreateSeuratObject(counts = sparse_mat, project = "mtb", min.cells = 0, min.features = 0, assay = "RNA")
-saveRDS(srat_for_DEG,'srat_for_DEG.rds')
-
-srat_for_DEG = readRDS('srat_for_DEG.rds')
-srat_for_DEG@meta.data$seurat_clusters =as.character(metadata$seurat_clusters$values)
-
-clusters_to_keep <- c("0", "3", "6", "12", "14")
-srat_sub <- subset(srat_for_DEG, subset = seurat_clusters %in% clusters_to_keep)
-srat_sub$expansion <- ifelse(srat_sub$seurat_clusters %in% c("0", "3"), "less", "more")
-saveRDS(srat_sub,'srat_subset_for_DEG.rds')
-
+srat = CreateSeuratObject(counts = sparse_mat, project = "mtb", min.cells = 0, min.features = 0, assay = "RNA")
+saveRDS(srat,'srat.rds')
