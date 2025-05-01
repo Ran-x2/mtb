@@ -14,9 +14,8 @@ import pickle
 storage_dir = '/mnt/vstor/SOM_PATH_DKB50/members/rxr456/mtb_250409/'
 cell_states_to_model = {
     "state_key": "identity", 
-    "start_state": "less_expanded", 
-    "goal_state": "more_expanded_mtb_specific",
-    "alt_states":['more_expanded_bystander','more_expanded_mtb_specific_2']
+    "start_state": "more_expanded_mtb_specific", 
+    "goal_state": "more_expanded_bystander"
 }
 ispstats = InSilicoPerturberStats(mode="goal_state_shift",
                                   genes_perturbed="all",
@@ -28,5 +27,5 @@ ispstats.get_stats(
     f"{storage_dir}",
     None,
     f"{storage_dir}",
-    "4states_overexpression"
+    "2states_overexpression"
 )
